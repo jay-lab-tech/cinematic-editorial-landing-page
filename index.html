@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Notes | A Journal for the Modern Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-charcoal: #1A1E23;
+            --color-deep-green: #0E2A22;
+            --color-muted-blue: #2C3E50;
+            --color-offwhite: #F5F1E8;
+            --color-earth: #5D4C3C;
+            --color-stone: #8A7F72;
+            --color-accent: #A8CABA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--color-offwhite);
+            background-color: var(--color-charcoal);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .serif {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(26, 30, 35, 0.4), rgba(26, 30, 35, 0.7)), 
+                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center 35%;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 65%;
+            padding: 4rem 2rem 8rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 400;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            color: var(--color-offwhite);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 500px;
+            color: rgba(245, 241, 232, 0.85);
+            margin-bottom: 3rem;
+        }
+        
+        /* Editorial Sections */
+        .editorial-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+        
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+        
+        @media (min-width: 768px) {
+            .section-content {
+                grid-template-columns: 5fr 7fr;
+                align-items: start;
+                gap: 6rem;
+            }
+            
+            .section-content.reverse {
+                grid-template-columns: 7fr 5fr;
+            }
+        }
+        
+        .text-block {
+            position: relative;
+        }
+        
+        .section-number {
+            position: absolute;
+            top: -3.5rem;
+            left: -1rem;
+            font-size: 8rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: rgba(168, 202, 186, 0.15);
+            font-weight: 600;
+            z-index: -1;
+            line-height: 1;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            color: var(--color-offwhite);
+        }
+        
+        .section-body {
+            font-size: 1.125rem;
+            color: rgba(245, 241, 232, 0.75);
+        }
+        
+        .section-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(26, 30, 35, 0.3) 100%);
+        }
+        
+        /* Highlight Moments */
+        .highlight {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .highlight-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+        
+        .highlight-quote {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.2;
+            color: var(--color-offwhite);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .highlight-quote::before,
+        .highlight-quote::after {
+            content: '"';
+            color: var(--color-accent);
+            font-size: 5rem;
+            position: absolute;
+            opacity: 0.3;
+        }
+        
+        .highlight-quote::before {
+            top: -2rem;
+            left: -3rem;
+        }
+        
+        .highlight-quote::after {
+            bottom: -3rem;
+            right: -3rem;
+        }
+        
+        /* Guides Section */
+        .guides {
+            padding: 8rem 0;
+            background: linear-gradient(to bottom, var(--color-charcoal), var(--color-deep-green));
+            position: relative;
+        }
+        
+        .guides-header {
+            max-width: 800px;
+            margin-bottom: 5rem;
+        }
+        
+        .guides-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+        
+        @media (min-width: 992px) {
+            .guides-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+            }
+            
+            .guide-item:nth-child(2) {
+                margin-top: 4rem;
+            }
+        }
+        
+        .guide-item {
+            position: relative;
+        }
+        
+        .guide-image {
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .guide-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .guide-item:hover .guide-image img {
+            transform: scale(1.08);
+        }
+        
+        .guide-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-offwhite);
+        }
+        
+        .guide-excerpt {
+            color: rgba(245, 241, 232, 0.7);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 10rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(14, 42, 34, 0.9), rgba(14, 42, 34, 0.7)), 
+                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            color: var(--color-offwhite);
+        }
+        
+        .cta-text {
+            font-size: 1.25rem;
+            color: rgba(245, 241, 232, 0.85);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 5rem 0 3rem;
+            border-top: 1px solid rgba(245, 241, 232, 0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-offwhite);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-nav a {
+            color: rgba(245, 241, 232, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-nav a:hover {
+            color: var(--color-accent);
+        }
+        
+        .footer-copyright {
+            color: rgba(245, 241, 232, 0.5);
+            font-size: 0.875rem;
+        }
+        
+        /* Buttons & Links */
+        .btn-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--color-accent);
+            text-decoration: none;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(168, 202, 186, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-text:hover {
+            color: var(--color-offwhite);
+            border-bottom-color: var(--color-offwhite);
+            gap: 1.25rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-content {
+                max-width: 100%;
+                padding: 2rem 1rem 6rem;
+            }
+            
+            .editorial-section {
+                padding: 5rem 0;
+            }
+            
+            .highlight-quote::before,
+            .highlight-quote::after {
+                display: none;
+            }
+            
+            .section-number {
+                font-size: 6rem;
+                top: -2.5rem;
+                left: 0;
+            }
+            
+            .cta-section {
+                padding: 6rem 0;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-up {
+            animation: fadeUp 1s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--color-charcoal);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-earth);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-stone);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content fade-up">
+                <span class="eyebrow">A Digital Journal</span>
+                <h1>For those who wander with purpose</h1>
+                <p>Field Notes is a digital sanctuary for the modern explorer—a place to collect thoughts, document journeys, and find clarity in the wilderness of everyday life.</p>
+                <a href="#journal" class="btn-text">
+                    Explore the journal
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Story Section 1 -->
+    <section class="editorial-section" id="journal">
+        <div class="container">
+            <div class="section-content">
+                <div class="text-block fade-up">
+                    <div class="section-number">01</div>
+                    <h2 class="section-title">Beyond the trailhead</h2>
+                    <div class="section-body">
+                        <p>We believe the most meaningful journeys often begin with a single step into the unknown. Field Notes was born from a simple observation: that the space between destinations holds more wisdom than the destinations themselves.</p>
+                        <p>This digital companion is designed not just to document where you've been, but to illuminate where you're going—with intention, clarity, and a deep appreciation for the journey itself.</p>
+                    </div>
+                </div>
+                <div class="image-container fade-up delay-1">
+                    <img src="https://images.unsplash.com/photo-1536152471326-642d7bbcb867?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80" alt="Mountain landscape at dusk">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Story Section 2 -->
+    <section class="editorial-section">
+        <div class="container">
+            <div class="section-content reverse">
+                <div class="image-container fade-up">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Person writing in a notebook in a forest">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="text-block fade-up delay-1">
+                    <div class="section-number">02</div>
+                    <h2 class="section-title">The art of noticing</h2>
+                    <div class="section-body">
+                        <p>In a world of constant distraction, Field Notes provides a sanctuary for attention. Our tools are designed to cultivate presence—whether you're documenting a week-long trek or reflecting on an ordinary Tuesday.</p>
+                        <p>With intuitive organization, minimalist design, and thoughtful prompts, we help you capture the details that matter most, transforming fleeting observations into lasting insights.</p>
+                        <a href="#insights" class="btn-text">
+                            Discover insights
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlight Moment -->
+    <section class="highlight">
+        <div class="container">
+            <div class="highlight-content fade-up">
+                <blockquote class="highlight-quote">"Not all who wander are lost, but all who wander with intention find something worth keeping."</blockquote>
+                <p class="eyebrow">From the Field Notes journal</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guides / Insights -->
+    <section class="guides" id="insights">
+        <div class="container">
+            <div class="guides-header fade-up">
+                <span class="eyebrow">Insights & Guidance</span>
+                <h2 class="section-title">Essays from the field</h2>
+                <p class="section-body">Thoughtful perspectives on exploration, creativity, and the art of paying attention.</p>
+            </div>
+            
+            <div class="guides-grid">
+                <div class="guide-item fade-up">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2346&q=80" alt="Mountains at sunrise">
+                    </div>
+                    <h3 class="guide-title">Morning rituals for clarity</h3>
+                    <p class="guide-excerpt">How establishing intentional morning practices can transform your day and deepen your connection to the world around you.</p>
+                </div>
+                
+                <div class="guide-item fade-up delay-1">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2392&q=80" alt="Forest path">
+                    </div>
+                    <h3 class="guide-title">The philosophy of the path</h3>
+                    <p class="guide-excerpt">Exploring how the journeys we choose—both literal and metaphorical—shape our perspectives and define our experiences.</p>
+                </div>
+                
+                <div class="guide-item fade-up delay-2">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Person looking at mountain landscape">
+                    </div>
+                    <h3 class="guide-title">Documenting the unseen</h3>
+                    <p class="guide-excerpt">A guide to capturing not just what you see, but what you feel—transforming observation into meaningful reflection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soft CTA -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="container">
+            <div class="cta-content fade-up">
+                <span class="eyebrow">Begin your journey</span>
+                <h2 class="cta-title">Find your path</h2>
+                <p class="cta-text">Field Notes is more than an app—it's a companion for the curious, a tool for the mindful, and a sanctuary for those who seek meaning in movement.</p>
+                <a href="#" class="btn-text">
+                    Start your first journal
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Field Notes</div>
+                <nav class="footer-nav">
+                    <a href="#journal">The Journal</a>
+                    <a href="#insights">Insights</a>
+                    <a href="#">Archive</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </nav>
+                <p class="footer-copyright">© 2026 Field Notes Journal. A companion for the modern explorer.
+                    <br> Images sourced from Unsplash. Created by [Azhar Noermansyah].
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-up animation to elements on scroll
+            const fadeElements = document.querySelectorAll('.fade-up, .delay-1, .delay-2');
+            
+            const fadeOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }
+                });
+            };
+            
+            // Set initial state
+            fadeElements.forEach(element => {
+                element.style.opacity = "0";
+                element.style.transform = "translateY(30px)";
+                element.style.transition = "opacity 1s ease, transform 1s ease";
+            });
+            
+            // Check on load and scroll
+            fadeOnScroll();
+            window.addEventListener('scroll', fadeOnScroll);
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
